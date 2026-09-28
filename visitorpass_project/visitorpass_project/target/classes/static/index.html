@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VisitorPass - Gated Community Visitor Pre-Approval</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><h1>🚪 VisitorPass</h1><p>Gated Community Visitor Pre-Approval with OTP</p></header>
+  <nav>
+    <button class="tab active" data-tab="flats">Flats</button>
+    <button class="tab" data-tab="residents">Residents</button>
+    <button class="tab" data-tab="approvals">Pre-Approvals</button>
+    <button class="tab" data-tab="gate">Security Gate</button>
+  </nav>
+  <div id="toast"></div>
+
+  <main>
+    <!-- FLATS -->
+    <section id="flats" class="panel active">
+      <h2>Flats</h2>
+      <div class="form" id="flatForm">
+        <input type="hidden" id="flatId">
+        <input id="flatBlock" placeholder="Block (e.g. A)">
+        <input id="flatNumber" placeholder="Flat number (e.g. 101)">
+        <button id="flatSave">Add Flat</button>
+        <button id="flatCancel" class="secondary hidden">Cancel</button>
+      </div>
+      <table><thead><tr><th>ID</th><th>Block</th><th>Flat No.</th><th>Actions</th></tr></thead><tbody id="flatRows"></tbody></table>
+    </section>
+
+    <!-- RESIDENTS -->
+    <section id="residents" class="panel">
+      <h2>Residents</h2>
+      <div class="form">
+        <input type="hidden" id="resId">
+        <input id="resName" placeholder="Name">
+        <input id="resPhone" placeholder="Phone (10 digits)" maxlength="10">
+        <input id="resEmail" placeholder="Email">
+        <select id="resFlat"></select>
+        <button id="resSave">Add Resident</button>
+        <button id="resCancel" class="secondary hidden">Cancel</button>
+      </div>
+      <table><thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Email</th><th>Flat</th><th>Actions</th></tr></thead><tbody id="resRows"></tbody></table>
+    </section>
+
+    <!-- APPROVALS -->
+    <section id="approvals" class="panel">
+      <h2>Visitor Pre-Approvals</h2>
+      <div class="form">
+        <input type="hidden" id="apId">
+        <select id="apResident"></select>
+        <input id="apName" placeholder="Visitor name">
+        <input id="apPhone" placeholder="Visitor phone (10 digits)" maxlength="10">
+        <input id="apPurpose" placeholder="Purpose of visit">
+        <label>Expected from <input type="datetime-local" id="apStart"></label>
+        <label>Expected until <input type="datetime-local" id="apEnd"></label>
+        <button id="apSave">Pre-Approve &amp; Generate OTP</button>
+        <button id="apCancel" class="secondary hidden">Cancel</button>
+      </div>
+      <div class="filters">
+        <label>Filter by status
+          <select id="apFilter">
+            <option value="">All</option><option>PENDING</option><option>USED</option><option>REVOKED</option><option>EXPIRED</option>
+          </select>
+        </label>
+        <button class="secondary" id="apRefresh">Refresh</button>
+      </div>
+      <table><thead><tr><th>ID</th><th>Resident</th><th>Visitor</th><th>Purpose</th><th>Window</th><th>OTP</th><th>Status</th><th>Actions</th></tr></thead><tbody id="apRows"></tbody></table>
+    </section>
+
+    <!-- GATE -->
+    <section id="gate" class="panel">
+      <h2>Security Gate - Validate OTP</h2>
+      <div class="form">
+        <input id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6">
+        <button id="otpValidate">Validate &amp; Log Entry</button>
+      </div>
+      <div id="gateResult"></div>
+      <h3>Entry Log</h3>
+      <table><thead><tr><th>Entry Time</th><th>Visitor</th><th>Phone</th><th>Visiting</th><th>Flat</th><th>Purpose</th></tr></thead><tbody id="logRows"></tbody></table>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
